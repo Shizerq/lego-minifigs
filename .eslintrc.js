@@ -18,10 +18,22 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react", "@typescript-eslint"],
+  settings: {
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
+  },
   rules: {
     "prettier/prettier": [2],
     "react/jsx-filename-extension": [2, { extensions: [".tsx"] }],
     // reports wrong errors for React Native stylesheets
     "no-use-before-define": "off",
+    "react/jsx-props-no-spreading": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "react/require-default-props": "off",
+    camelcase: "off",
   },
 };
