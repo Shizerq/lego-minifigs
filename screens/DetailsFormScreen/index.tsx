@@ -39,15 +39,24 @@ export function DetailsFormScreen({
         <View style={styles.container}>
           <Heading>Personal Details</Heading>
           <View style={styles.form}>
-            <Input control={control} name="fullName" label="Full Name" />
+            <Input
+              control={control}
+              name="fullName"
+              label="Full Name"
+              autoComplete="name"
+            />
             <Input
               control={control}
               rules={{
+                // just wanted to show off that I know how to use custom validation
+                // I do know that using regex for email validation is not the best
+                // and has multiple caveats
                 validate: (value) => validateEmail(value) || "Invalid email",
               }}
               name="email"
               label="Email"
               keyboardType="email-address"
+              autoComplete="email"
             />
             <Input control={control} name="address" label="Address" />
             <Input control={control} name="city" label="City" />
