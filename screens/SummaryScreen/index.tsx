@@ -26,15 +26,22 @@ export function SummaryScreen({
   const [parts, setParts] = React.useState<Part[] | null>(null);
 
   React.useEffect(() => {
-    Promise.all([
-      axiosInstance.get<MiniFigure>(`/minifigs/${figureId}/`),
-      axiosInstance.get<PartsResponse>(`/minifigs/${figureId}/parts/`),
-    ]).then((responses) => {
-      setMiniFigure(responses[0].data);
-      // virtually none of the minifigs have more than few parts that wouldn't
-      // fit on a single page, so I'm not going to worry about pagination
-      setParts(responses[1].data.results);
-    });
+    (async () => {
+      try {
+        const responses = await Promise.all([
+          axiosInstance.get<MiniFigure>(`/minifigs/${figureId}/`),
+          axiosInstance.get<PartsResponse>(`/minifigs/${figureId}/parts/`),
+        ]);
+
+        setMiniFigure(responses[0].data);
+        // virtually none of the minifigs have more than few parts that wouldn't
+        // fit on a single page, so I'm not going to worry about pagination
+        setParts(responses[1].data.results);
+      } catch (error) {
+        // would do the error handling there
+        Alert.alert("Something went wrong");
+      }
+    })();
   }, []);
 
   const onSubmit = React.useCallback(() => {
