@@ -24,6 +24,7 @@ export function SummaryScreen({
 
   const [miniFigure, setMiniFigure] = React.useState<MiniFigure | null>(null);
   const [parts, setParts] = React.useState<Part[] | null>(null);
+  const loading = !miniFigure || !parts;
 
   React.useEffect(() => {
     (async () => {
@@ -64,48 +65,48 @@ export function SummaryScreen({
     }
   }, [user, figureId]);
 
-  if (miniFigure && parts) {
-    // normally I would use a library like i18n-js to handle this
-    const partsText = (numParts: number) => {
-      const singular = `is ${numParts} part`;
-      const plural = `are ${numParts} parts`;
-
-      return numParts > 1 ? plural : singular;
-    };
-
+  if (loading) {
     return (
       <Background variant="white">
-        <ScrollView contentContainerStyle={styles.container}>
-          <Heading variant="primary">Summary</Heading>
-          {miniFigure.set_img_url && (
-            <Image
-              source={{ uri: miniFigure.set_img_url }}
-              style={styles.image}
-            />
-          )}
-          <Text style={styles.name}>{miniFigure.name}</Text>
-          <Text style={styles.partsTitle}>
-            There {partsText(miniFigure.num_parts)} in this minifig:
-          </Text>
-          <View style={styles.partsContainer}>
-            {parts.map((part) => (
-              <FigurePart key={part.part.part_num} data={part} />
-            ))}
-          </View>
-
-          <Button style={styles.button} onPress={onSubmit}>
-            Submit
-          </Button>
-        </ScrollView>
+        <View style={styles.container}>
+          <ActivityIndicator />
+        </View>
       </Background>
     );
   }
 
+  // normally I would use a library like i18n-js to handle this
+  const partsText = (numParts: number) => {
+    const singular = `is ${numParts} part`;
+    const plural = `are ${numParts} parts`;
+
+    return numParts > 1 ? plural : singular;
+  };
+
   return (
     <Background variant="white">
-      <View style={styles.container}>
-        <ActivityIndicator />
-      </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Heading variant="primary">Summary</Heading>
+        {miniFigure.set_img_url && (
+          <Image
+            source={{ uri: miniFigure.set_img_url }}
+            style={styles.image}
+          />
+        )}
+        <Text style={styles.name}>{miniFigure.name}</Text>
+        <Text style={styles.partsTitle}>
+          There {partsText(miniFigure.num_parts)} in this minifig:
+        </Text>
+        <View style={styles.partsContainer}>
+          {parts.map((part) => (
+            <FigurePart key={part.part.part_num} data={part} />
+          ))}
+        </View>
+
+        <Button style={styles.button} onPress={onSubmit}>
+          Submit
+        </Button>
+      </ScrollView>
     </Background>
   );
 }
