@@ -1,5 +1,4 @@
-import * as React from "react";
-import { LayoutChangeEvent, Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { useForm } from "react-hook-form";
@@ -24,7 +23,6 @@ export function DetailsFormScreen({
   } = useForm<DetailsFormModel>({
     reValidateMode: "onBlur",
   });
-  const [scrollEnabled, setScrollEnabled] = React.useState(false);
 
   const onSubmit = handleSubmit((data) => {
     if (isValid) {
@@ -35,21 +33,10 @@ export function DetailsFormScreen({
     }
   });
 
-  const onLayout = React.useCallback((event: LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout;
-
-    if (height > screenHeight * 0.9) {
-      setScrollEnabled(true);
-    }
-  }, []);
-
   return (
     <Background>
-      <KeyboardAwareScrollView
-        scrollEnabled={scrollEnabled}
-        style={styles.scrollView}
-      >
-        <View style={styles.container} onLayout={onLayout}>
+      <KeyboardAwareScrollView style={styles.scrollView}>
+        <View style={styles.container}>
           <Heading>Personal Details</Heading>
           <View style={styles.form}>
             <Input control={control} name="fullName" label="Full Name" />
