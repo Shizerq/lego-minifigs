@@ -35,5 +35,7 @@ module.exports = {
     "import/extensions": "off",
     "react/require-default-props": "off",
     camelcase: "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error",
   },
 };
