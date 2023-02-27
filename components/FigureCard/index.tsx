@@ -10,6 +10,9 @@ interface Props {
   active: boolean;
 }
 
+export const width = 300;
+export const offset = 10;
+
 export function FigureCard({ figure, active }: Props) {
   const showDetails = React.useCallback(async () => {
     await WebBrowser.openBrowserAsync(figure.set_url);
@@ -34,13 +37,13 @@ export function FigureCard({ figure, active }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 300,
+    width,
     height: 340,
 
     borderWidth: 6,
     borderColor: "transparent",
 
-    marginHorizontal: 10,
+    marginHorizontal: offset,
 
     borderRadius: 10,
 
