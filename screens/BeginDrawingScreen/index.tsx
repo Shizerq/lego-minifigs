@@ -20,6 +20,9 @@ export function BeginDrawingScreen({
     setLoading(true);
 
     try {
+      // API doesn't have any endpoint that would randomly return minifigs
+      // so we fetch how many minifigs are in the theme and then fetch all of them on a single page
+      // then we randomly select 3 of them
       const initialFetch = await axiosInstance.get<MiniFiguresResponse>(
         "/minifigs/",
         {
@@ -39,7 +42,7 @@ export function BeginDrawingScreen({
         }
       );
 
-      const randomFigures = getRandomFigures(allMinifigs.data.results);
+      const randomFigures = getRandomFigures(allMinifigs.data.results, 3);
 
       setLoading(false);
 
