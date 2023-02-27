@@ -11,7 +11,6 @@ import { MiniFigure } from "../../types/miniFigs";
 interface Props {
   data: MiniFigure[];
   currentIndex: number;
-  // eslint-disable-next-line no-unused-vars
   setCurrentIndex: (index: number) => void;
 }
 
