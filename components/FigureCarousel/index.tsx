@@ -4,7 +4,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
-import { FigureCard } from "../FigureCard";
+import { FigureCard, width, offset } from "../FigureCard";
 
 import { MiniFigure } from "../../types/miniFigs";
 
@@ -15,9 +15,6 @@ interface Props {
 }
 
 export function FigureCarousel({ data, currentIndex, setCurrentIndex }: Props) {
-  const offset = 10;
-  const width = 300;
-
   const onScroll = React.useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const { contentOffset } = event.nativeEvent;
